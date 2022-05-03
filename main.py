@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 
-# HTTPExceptionfrom fastapi import HTTPException.
+# HTTPException from fastapi import HTTPException.
 # added the import of HTTPException from this article https://fastapi.tiangolo.com/tutorial/handling-errors/
 
 app = FastAPI()
@@ -15,19 +15,26 @@ https://fastapi.tiangolo.com/tutorial/body/
 '''
 # API 5: GET /api/v1/math/{operation}/{variable1}/(variable2} -> execute +,-,*,/ or return 404 if operation invalid
 # /api/v1/math/add/1/2
-@app.get("/api/v1/math/{operation}/{variable1}/(variable2} ")
-async def PerformOperation(operation: str,variable1: int,variable2: int):
+@app.get("/api/v1/math/{operation}/{variable1}/{variable2}")
+async def PerformOperation5(operation: str,variable1: int,variable2: int):
     if operation == "add":
-        sum=variable1+variable2
-        print(sum)
-        return {"sum": sum}
+        ops=variable1+variable2
+        return {"ops": ops}
+    elif operation == "sub":
+        ops = variable1 - variable2
+        return {"ops": ops}
+    elif operation == "mult":
+        ops = variable1 * variable2
+        return {"ops": ops}
+    elif operation == "div":
+        ops = variable1 / variable2
+        return {"ops": ops}
     else:
         print("else branch")
         raise HTTPException(status_code=404, detail="Item not found")
 
 '''
-Once I get the above endpoint workking, I'll add the following to branch for all math operators using an 
-elif or a dictionary (if I can remember how to do this with a dictionary) -> 
+To do later - create this endpoint with a dictionary -> 
 def add (X,Y):
        return X+Y
    def sub (X,Y):
@@ -56,6 +63,25 @@ def add (X,Y):
 
 #API 6: POST /api/v1/math/{operation} -> execute +,-,*,/ or return 404 if operation invalid
 # First POST, not a GET
+# API 5: GET /api/v1/math/{operation}/{variable1}/(variable2} -> execute +,-,*,/ or return 404 if operation invalid
+# /api/v1/math/add/1/2
+@app.post("/api/v1/math/{operation}")
+async def PerformOperation6(operation: str,variable1: int,variable2: int):
+    if operation == "add":
+        ops=variable1+variable2
+        return {"ops": ops}
+    elif operation == "sub":
+        ops = variable1 - variable2
+        return {"ops": ops}
+    elif operation == "mult":
+        ops = variable1 * variable2
+        return {"ops": ops}
+    elif operation == "div":
+        ops = variable1 / variable2
+        return {"ops": ops}
+    else:
+        print("else branch")
+        raise HTTPException(status_code=404, detail="Item not found")
 
 
 
