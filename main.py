@@ -1,6 +1,68 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+
+# HTTPExceptionfrom fastapi import HTTPException.
+# added the import of HTTPException from this article https://fastapi.tiangolo.com/tutorial/handling-errors/
 
 app = FastAPI()
+
+# START HOMEWORK APIs 5 6 7 ---------------------------------------------------------------------
+''' START REFERENCE URLS  -------------------------
+NOTION https://www.notion.so/Api-Exercise-8c8c0119b01642c1a8b35e9f5bfecf8c
+https://fastapi.tiangolo.com/tutorial/body/
+--- END REFERENCE URLS  --------------------------- 
+'''
+# API 5: GET /api/v1/math/{operation}/{variable1}/(variable2} -> execute +,-,*,/ or return 404 if operation invalid
+# /api/v1/math/add/1/2
+@app.get("/api/v1/math/{operation}/{variable1}/(variable2} ")
+async def PerformOperation(operation: str,variable1: int,variable2: int):
+    if operation == "add":
+        sum=variable1+variable2
+        print(sum)
+        return {"sum": sum}
+    else:
+        print("else branch")
+        raise HTTPException(status_code=404, detail="Item not found")
+
+'''
+Once I get the above endpoint workking, I'll add the following to branch for all math operators using an 
+elif or a dictionary (if I can remember how to do this with a dictionary) -> 
+def add (X,Y):
+       return X+Y
+   def sub (X,Y):
+       return X-Y
+   def mult (X,Y):
+       return X*Y
+   def div (X,Y):
+       return X/Y
+
+# I think I should use a dictionary here, but I need to relearn that - so using elif
+   def OperationSelector(Ops, X, Y):
+       if ops == "add":
+           return add(X, Y)
+       if ops == "sub":
+           return sub(X, Y)
+       if ops == "mult":
+           return mult(X, Y)
+       if ops == "div":
+           return div(X, Y)
+       else:
+           return "unknown operator - 404 error"
+   OperationSelector(operation,variable1,variable2)
+'''
+#return {test:"testing api 5"}
+
+
+#API 6: POST /api/v1/math/{operation} -> execute +,-,*,/ or return 404 if operation invalid
+# First POST, not a GET
+
+
+
+# END HOMEWORK APIs 5 6 7 -----------------------------------------------------------------------
+#
+#
+#
 
 # START PRADEEP LESSON - SIMPLE APIs  -----------------------------------------------------------
 @app.get("/")
