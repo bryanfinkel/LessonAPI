@@ -69,10 +69,10 @@ def add (X,Y):
 class Item(BaseModel):
     variable1: int
     variable2: int
-    operation: str | None = None
+
 '''
-@app.post("/items/")
-async def create_item(item: Item):
+@app.post("/trees/")
+async def create_trees(item: Item):
     return item
 @app.post("/api/v1/math/{operation}/items/")
 async def PerformOperation6(operation: str, item: Item):
@@ -80,8 +80,8 @@ async def PerformOperation6(item: Item):
 '''
 @app.post("/api/v1/math/{operation}")
 async def PerformOperation6(operation: str, item: Item):
-    #variable1: int
-    #variable2: int
+    variable1: int = item.variable1
+    variable2: int = item.variable2
     if operation == "add":
         ops=variable1+variable2
         return {"ops": ops}
@@ -98,6 +98,12 @@ async def PerformOperation6(operation: str, item: Item):
         print("else branch")
         raise HTTPException(status_code=404, detail="Item not found")
 
+#API 7: GET /api/v1/hello?name=pradeep -> use query params
+# READ THE DOCS: https://fastapi.tiangolo.com/tutorial/query-params/
+@app.get("/api/v1/hello")
+# use this URL to test: http://127.0.0.1:8000/api/v1/hello/?name=pradeep
+async def QueryPass(name: str = "Wilson"): # Wilson is the default if no query param is passed
+    return{"greeting":"Hello "+name+"!"}
 
 
 # END HOMEWORK APIs 5 6 7 -----------------------------------------------------------------------
@@ -188,4 +194,5 @@ async def sum(V1,V2):
     print(BIF)
     return {"forcing in the forumula":BIF}
 
-# END HOMEWORK ----------------------------------------------------------------------------------
+# END HOMEWORK ---------
+# -------------------------------------------------------------------------
