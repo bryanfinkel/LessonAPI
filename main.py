@@ -10,6 +10,12 @@ from pydantic import BaseModel
 # from app.intelepeer.api.routes import router as intelepeer_routes -- another example
 # examples from Pradeep main.py
 
+
+# this was wrong -> from LessonAPI.routers.greetings import router as HW_greetings
+# this was wrong -> from LessonAPI.routers.sums import router as HW_sums
+# this was wrong -> from LessonAPI.routers.maths import router as HW_maths
+# wrong, because of the prefix LessonAPI.
+
 from routers.greetings import router as HW_greetings
 from routers.sums import router as HW_sums
 from routers.maths import router as HW_maths

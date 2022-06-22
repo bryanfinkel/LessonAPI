@@ -8,13 +8,14 @@ from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel
 
 router = APIRouter()
-app = FastAPI() # -- Q: Do we not need this line any more because we are using APIrouter now?
+# app = FastAPI() # -- Q: Do we not need this line any more because we are using APIrouter now?
+# NO NOT NEEDED and did a global replace of @app.get -> @router.get
 
 # SUM APIs  -----------------------------------------------------------
 # API 4: GET /api/v1/sum/1/1 --> input (2) path parameters, and them, and return the sum
 
 # sum1 - (my second try)  -- Q: did I need to force the int on the parameters in the method, or just the formula?
-@app.get("/api/v1/sum1/{V1}/{V2}")     # /sum1 forces parameters in 2 places - THIS WORKS
+@router.get("/api/v1/sum1/{V1}/{V2}")     # /sum1 forces parameters in 2 places - THIS WORKS
 async def sum(V1: int,V2: int):
     VAR1=int(V1)
     VAR2=int(V2)
@@ -24,7 +25,7 @@ async def sum(V1: int,V2: int):
     print(BIF)
     return {"Double forcing":BIF}
 
-@app.get("/api/v1/sum2/{V1}/{V2}")     # /sum2 no forcing is used - DOES NOT WORK, it concatenates V1 and V2
+@router.get("/api/v1/sum2/{V1}/{V2}")     # /sum2 no forcing is used - DOES NOT WORK, it concatenates V1 and V2
 async def sum(V1,V2):
     VAR1=V1
     VAR2=V2
@@ -32,7 +33,7 @@ async def sum(V1,V2):
     print(BIF)
     return {"NO forcing":BIF}
 
-@app.get("/api/v1/sum3/{V1}/{V2}")     # /sum3 forces parameters in the method definition only - THIS WORKS
+@router.get("/api/v1/sum3/{V1}/{V2}")     # /sum3 forces parameters in the method definition only - THIS WORKS
 async def sum(V1: int,V2: int):
     VAR1=V1
     VAR2=V2
@@ -40,7 +41,7 @@ async def sum(V1: int,V2: int):
     print(BIF)
     return {"Forcing in the method":BIF}
 
-@app.get("/api/v1/sum4/{V1}/{V2}")     # /sum4 forces parameters in the VAR definitions only - THIS WORKS
+@router.get("/api/v1/sum4/{V1}/{V2}")     # /sum4 forces parameters in the VAR definitions only - THIS WORKS
 async def sum(V1,V2):
     VAR1=int(V1)
     VAR2=int(V2)
@@ -48,7 +49,7 @@ async def sum(V1,V2):
     print(BIF)
     return {"forcing at the variables":BIF}
 
-@app.get("/api/v1/sum5/{V1}/{V2}")     # /sum5 eliminates unnecessary variables, forces parameters in the formula - THIS WORKS
+@router.get("/api/v1/sum5/{V1}/{V2}")     # /sum5 eliminates unnecessary variables, forces parameters in the formula - THIS WORKS
 async def sum(V1,V2):
     BIF = int(V1) + int(V2)
     print(BIF)

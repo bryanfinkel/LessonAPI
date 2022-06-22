@@ -8,13 +8,14 @@ from fastapi import APIRouter, FastAPI, status, HTTPException
 from pydantic import BaseModel
 
 router = APIRouter()
-app = FastAPI() # -- Q: Do we not need this line any more because we are using APIrouter now?
+# app = FastAPI() # -- Q: Do we not need this line any more because we are using APIrouter now?
+# NO, did a global replace of app.get _> router.get
 
 # START HOMEWORK APIs 5 6 7 ---------------------------------------------------------------------
 
 # API 5: GET /api/v1/math/{operation}/{variable1}/(variable2} -> execute +,-,*,/ or return 404 if operation invalid
 # /api/v1/math/add/1/2
-@app.get("/api/v1/math/{operation}/{variable1}/{variable2}")
+@router.get("/api/v1/math/{operation}/{variable1}/{variable2}")
 async def PerformOperation5(operation: str,variable1: int,variable2: int):
     if operation == "add":
         ops=variable1+variable2
@@ -68,7 +69,8 @@ class Item(BaseModel):
     variable2: int
 
 # First POST, not a GET
-@app.post("/api/v1/math/{operation}")
+# http://127.0.0.1:8000/api/v1/math/sub/1/9  <--------- SYNTAX EXAMPLE
+@router.post("/api/v1/math/{operation}")
 async def PerformOperation6(operation: str, item: Item):
     variable1: int = item.variable1
     variable2: int = item.variable2
