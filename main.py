@@ -19,11 +19,13 @@ from pydantic import BaseModel
 from routers.greetings import router as HW_greetings
 from routers.sums import router as HW_sums
 from routers.maths import router as HW_maths
+from routers.auth import router as HW_auth
 
 app = FastAPI()
 app.include_router(HW_greetings)
 app.include_router(HW_sums)
 app.include_router(HW_maths)
+app.include_router(HW_auth)
 
 @app.get("/status")
 async def status():
